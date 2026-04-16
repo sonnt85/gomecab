@@ -1,5 +1,7 @@
 # gomecab
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/sonnt85/gomecab.svg)](https://pkg.go.dev/github.com/sonnt85/gomecab)
+
 CGo bindings for MeCab — a Japanese morphological analyzer.
 
 ## Installation
@@ -90,6 +92,11 @@ func main() {
 - `(*Node).Length() int` — surface form length in bytes
 - `(*Node).Rlength() int` — length including leading whitespace
 - `(*Node).Posid() int` — part-of-speech ID
+- `(*Node).RcAttr() int` — right attribute ID
+- `(*Node).LcAttr() int` — left attribute ID
+- `(*Node).Char_type() int` — character type of the token
+- `(*Node).Stat() int` — node status (normal, unknown, BOS/EOS, etc.)
+- `(*Node).Isbest() int` — 1 if this node is on the best path, 0 otherwise
 - `(*Node).Wcost() int` — word cost
 - `(*Node).Cost() int` — cumulative best cost
 - `(*Node).Prob() float32` — marginal probability
