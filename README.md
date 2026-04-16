@@ -97,6 +97,10 @@ func main() {
 - `(*Node).Beta() float32` — backward log summation
 - `(*Node).StartPos() int` — rune start position in the original text
 
+## Author
+
+**sonnt85** — [thanhson.rf@gmail.com](mailto:thanhson.rf@gmail.com)
+
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.
