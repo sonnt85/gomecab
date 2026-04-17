@@ -8,30 +8,30 @@ import (
 
 var str = "すもももももももものうち"
 
-func parse(m *MeCab) {
+func parse(t *testing.T, m *MeCab) {
 	tg, err := m.NewTagger()
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	defer tg.Destroy()
 	lt, err := m.NewLattice(str)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	defer lt.Destroy()
 
 	fmt.Println(tg.Parse(lt))
 }
 
-func parseToNode(m *MeCab) {
+func parseToNode(t *testing.T, m *MeCab) {
 	tg, err := m.NewTagger()
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	defer tg.Destroy()
 	lt, err := m.NewLattice(str)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	defer lt.Destroy()
 
@@ -39,7 +39,7 @@ func parseToNode(m *MeCab) {
 	for {
 		features := strings.Split(node.Feature(), ",")
 		if features[0] == "名詞" {
-			fmt.Println(fmt.Sprintf("%s %s", node.Surface(), node.Feature()))
+			fmt.Printf("%s %s\n", node.Surface(), node.Feature())
 		}
 		if node.Next() != nil {
 			break
@@ -50,24 +50,24 @@ func parseToNode(m *MeCab) {
 func TestMecab2(t *testing.T) {
 	m, err := New("-Owakati")
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	defer m.Destroy()
-	parse(m)
-	parseToNode(m)
+	parse(t, m)
+	parseToNode(t, m)
 }
 
 // func TestMecab1(t *testing.T) {
-// 	tagger, err := NewTagger("-Okatakana") // Chuyển đổi sang Katakana
+// 	tagger, err := NewTagger("-Okatakana") // Convert to Katakana
 // 	if err != nil {
-// 		panic(err)
+// 		t.Fatal(err)
 // 	}
 // 	defer tagger.Destroy()
 
 // 	result, err := tagger.Parse("漢字")
 // 	if err != nil {
-// 		panic(err)
+// 		t.Fatal(err)
 // 	}
 
-// 	fmt.Println(result) // Kết quả: カンジ
+// 	fmt.Println(result) // Result: カンジ
 // }
