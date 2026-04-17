@@ -1,7 +1,6 @@
 package gomecab
 
 import (
-	"fmt"
 	"strings"
 	"testing"
 )
@@ -9,6 +8,7 @@ import (
 var str = "すもももももももものうち"
 
 func parse(t *testing.T, m *MeCab) {
+	t.Helper()
 	tg, err := m.NewTagger()
 	if err != nil {
 		t.Fatal(err)
@@ -20,10 +20,15 @@ func parse(t *testing.T, m *MeCab) {
 	}
 	defer lt.Destroy()
 
-	fmt.Println(tg.Parse(lt))
+	out := tg.Parse(lt)
+	if out == "" {
+		t.Error("Parse returned empty string")
+	}
+	t.Logf("parse: %s", out)
 }
 
 func parseToNode(t *testing.T, m *MeCab) {
+	t.Helper()
 	tg, err := m.NewTagger()
 	if err != nil {
 		t.Fatal(err)
@@ -39,7 +44,7 @@ func parseToNode(t *testing.T, m *MeCab) {
 	for {
 		features := strings.Split(node.Feature(), ",")
 		if features[0] == "名詞" {
-			fmt.Printf("%s %s\n", node.Surface(), node.Feature())
+			t.Logf("noun: %s %s", node.Surface(), node.Feature())
 		}
 		if node.Next() != nil {
 			break
@@ -56,18 +61,3 @@ func TestMecab2(t *testing.T) {
 	parse(t, m)
 	parseToNode(t, m)
 }
-
-// func TestMecab1(t *testing.T) {
-// 	tagger, err := NewTagger("-Okatakana") // Convert to Katakana
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	defer tagger.Destroy()
-
-// 	result, err := tagger.Parse("漢字")
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-
-// 	fmt.Println(result) // Result: カンジ
-// }
